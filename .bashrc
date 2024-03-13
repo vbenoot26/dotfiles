@@ -116,13 +116,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PATH="$PATH:/opt/nvim/"
-
-#zoxide
-eval "$(zoxide init bash)"
-
 #ALIASSES --------------------------------------------------------------------
 alias mkcd='function mkcdf() { mkdir "$1"; cd "$1"; }; mkcdf'
-alias buton='gsettings set org.cinnamon.desktop.wm.preferences button-layout "close,minimize,maximize:"'
-alias butoff='gsettings set org.cinnamon.desktop.wm.preferences button-layout ""'
-alias butstatus='gsettings get org.cinnamon.desktop.wm.preferences button-layout'
+eval "$(zoxide init bash)"
