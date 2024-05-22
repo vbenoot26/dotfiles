@@ -87,6 +87,7 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
+XDG_CONFIG_HOME="~/.config/"
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
@@ -117,5 +118,12 @@ if ! shopt -oq posix; then
 fi
 
 #ALIASSES --------------------------------------------------------------------
-alias mkcd='function mkcdf() { mkdir "$1"; cd "$1"; }; mkcdf'
+alias mkcd='function mkcdf() { mkdir "$1"; z "$1"; }; mkcdf'
 eval "$(zoxide init bash)"
+
+
+[ -f "/home/vinkel/.ghcup/env" ] && . "/home/vinkel/.ghcup/env" # ghcup-env
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
