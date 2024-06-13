@@ -207,8 +207,12 @@ bar {
 
 hide_edge_borders both
 
+exec_always feh --bg-scale ~/Pictures/hubble-30th-star-cluster-ngc-602.jpg
+
 assign [class="Spotify"] $ws3
 exec --no-startup-id spotify
 
 assign [class="firefox"] $ws2
 exec --no-startup-id firefox
+
+exec --no-startup-id picom -CGb

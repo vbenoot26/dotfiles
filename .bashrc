@@ -119,6 +119,8 @@ fi
 
 #ALIASSES --------------------------------------------------------------------
 alias mkcd='function mkcdf() { mkdir "$1"; z "$1"; }; mkcdf'
+alias v='nvim .'
+alias copy='xclip -sel clip'
 eval "$(zoxide init bash)"
 
 
