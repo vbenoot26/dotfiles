@@ -132,3 +132,4 @@ export NVM_DIR="$HOME/.nvm"
 
 eval $(thefuck --alias)
 eval $(thefuck --alias FUCK)
+. "$HOME/.cargo/env"
