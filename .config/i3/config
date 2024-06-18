@@ -195,6 +195,7 @@ client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color      
 # bar
 bar {
   	status_command i3blocks -c /home/vinkel/.config/i3/i3blocks.conf
+    tray_output none
 	colors {
 		background $bg-color
 	    	separator #757575
@@ -207,7 +208,7 @@ bar {
 
 hide_edge_borders both
 
-exec_always feh --bg-scale ~/Pictures/hubble-30th-star-cluster-ngc-602.jpg
+exec_always feh --bg-scale ~/Pictures/hubble-dust.jpg
 
 assign [class="Spotify"] $ws3
 exec --no-startup-id spotify
@@ -215,4 +216,4 @@ exec --no-startup-id spotify
 assign [class="firefox"] $ws2
 exec --no-startup-id firefox
 
-exec --no-startup-id picom -CGb
+exec --no-startup-id compton --config ~/.config/compton.conf
