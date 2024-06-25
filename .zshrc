@@ -47,6 +47,13 @@ zinit cdreplay -q
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# Keybindings
+set -o vi
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
+bindkey '^[w' kill-region
+bindkey -s ^f "tmux-sessionizer\n"
+
 # History
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
@@ -67,3 +74,4 @@ alias c='clear'
 alias v='nvim .'
 
 eval "$(zoxide init zsh)"
+PATH="$PATH":"$HOME/scripts/"
