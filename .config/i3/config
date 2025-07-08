@@ -199,6 +199,7 @@ bar {
     modifier $mod
     strip_workspace_numbers yes
   	status_command i3blocks -c /home/vinkel/.config/i3/i3blocks.conf
+    tray_output none
 	colors {
 		background $inactive-bg-color
 	    	separator #757575
@@ -234,7 +235,8 @@ exec --no-startup-id spotify
 
 exec_always --no-startup-id pkaction
 
-exec --no-startup-id firefox
+exec --no-startup-id i3-msg "workspace $ws1; exec alacritty"
+exec --no-startup-id i3-msg "workspace $ws2; exec firefox"
 
 exec --no-startup-id compton --config ~/.config/compton.conf
 exec_always xrandr --output DP-2 --right-of DP-1
