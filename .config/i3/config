@@ -194,6 +194,9 @@ client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color      
 
 # bar
 bar {
+    mode hide
+    hidden_state hide
+    modifier $mod
   	status_command i3blocks -c /home/vinkel/.config/i3/i3blocks.conf
     tray_output none
 	colors {
@@ -206,14 +209,33 @@ bar {
 	}
 }
 
+#Floating windows
+for_window [window_role="About"] floating enable
+for_window [window_role="Organizer"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="page-info"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="toolbox"] floating enable
+for_window [window_role="webconsole"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
+
 hide_edge_borders both
+bindsym $mod+x [urgent=latest] focus
 
 exec_always feh --bg-scale ~/Pictures/wallpapers/hubble-dust.jpg
 
 assign [class="Spotify"] $ws3
 exec --no-startup-id spotify
 
+exec_always --no-startup-id pkaction
+
 assign [class="firefox"] $ws2
 exec --no-startup-id firefox
 
 exec --no-startup-id compton --config ~/.config/compton.conf
+exec_always xrandr --output DP-2 --right-of DP-1
+exec_always xrandr --output HDMI-0 --same-as DP-1
+
