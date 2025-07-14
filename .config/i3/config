@@ -194,6 +194,9 @@ client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color      
 
 # bar
 bar {
+    mode hide
+    hidden_state hide
+    modifier $mod
   	status_command i3blocks -c /home/vincent/.config/i3/i3blocks.conf
     tray_output none
 	colors {
@@ -206,7 +209,9 @@ bar {
 	}
 }
 
-hide_edge_borders both
+default_border pixel 1
+default_floating_border pixel 1
+hide_edge_borders smart
 
 exec_always feh --bg-scale ~/Fotos/stars.jpeg
 
