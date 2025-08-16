@@ -69,6 +69,7 @@ setopt hist_find_no_dups
 
 # Aliases
 alias ls='ls --color'
+alias ll='ls -lah'
 alias vim='nvim'
 alias c='clear'
 alias v='nvim .'
