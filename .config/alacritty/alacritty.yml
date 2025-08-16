@@ -1,0 +1,9 @@
+import:
+  - ~/.cache/wal/colors.yml
+
+window:
+  opacity: 0.6
+
+font:
+  normal:
+    family: "UbuntuMono Nerd Font"

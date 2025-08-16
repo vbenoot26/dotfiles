@@ -74,6 +74,7 @@ alias vim='nvim'
 alias c='clear'
 alias v='nvim .'
 alias uit='shutdown -h now'
+alias l='ls -lah'
 #antlr
 # alias antlr4='java -jar ~/ANTLR/antlr-4.13.1-complete.jar'
 # alias grun='java org.antlr.v4.gui.TestRig'
@@ -86,3 +87,13 @@ PATH="$PATH":"$HOME/scripts/"
 PATH="$PATH":"$HOME/lua/lua-5.4.8/" 
 PATH="$PATH":"$HOME/.local/bin" 
 PATH="$PATH":"$HOME/go/bin/"
+
+#wal
+(cat ~/.cache/wal/sequences)
+
+#pywal for dmenu
+# Import the colors.
+. "${HOME}/.cache/wal/colors.sh"
+
+# Create the alias.
+alias dmen='dmenu_run -nb "$color0" -nf "$color15" -sb "$color1" -sf "$color15"'
