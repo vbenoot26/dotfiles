@@ -1,0 +1,13 @@
+#!/bin/zsh
+
+playerctl --player=spotify metadata --follow \
+  --format '{{mpris:artUrl}}' | while read url; do
+    img_path="/tmp/album-$(date +%s).jpg"
+    curl -s "$url" -o "$img_path"
+    wal -i "$img_path" -na 60
+
+    source ~/.cache/wal/colors.sh
+    feh --bg-center --image-bg "$background" "$img_path"
+    # upadate firefox
+    pywalfox update
+done
