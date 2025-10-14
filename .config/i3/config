@@ -220,7 +220,7 @@ bar {
     hidden_state hide
     modifier $mod
     strip_workspace_numbers yes
-  	status_command i3blocks -c /home/vinkel/.config/i3/i3blocks.conf
+  	status_command i3blocks -c /home/vincent/.config/i3/i3blocks.conf
     tray_output none
     colors {
         background $bg
@@ -260,5 +260,6 @@ exec --no-startup-id compton --config ~/.config/compton.conf
 exec_always xrandr --output DP-2 --right-of DP-1
 exec_always xrandr --output HDMI-0 --same-as DP-1
 
+exec_always picom -f
 # wallpaper is spotify album art
 exec_always --no-startup-id ~/.config/i3/scripts/wallpaperer
