@@ -2,7 +2,7 @@
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+ source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 if [[ -f "/opt/homebrew/bin/brew" ]] then
@@ -53,6 +53,7 @@ bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
 bindkey -s ^f "tmux-sessionizer\n"
+bindkey -s ^o "spot\n"
 
 # History
 HISTSIZE=5000
@@ -69,6 +70,7 @@ setopt hist_find_no_dups
 
 # Aliases
 alias ls='ls --color'
+alias ll='ls -lah'
 alias vim='nvim'
 alias c='clear'
 alias v='nvim .'
@@ -81,3 +83,27 @@ PATH="$PATH":"$HOME/go/bin/"
 if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
     exec startx
 fi
+alias uit='shutdown -h now'
+alias l='ls -lah'
+#antlr
+# alias antlr4='java -jar ~/ANTLR/antlr-4.13.1-complete.jar'
+# alias grun='java org.antlr.v4.gui.TestRig'
+
+mkcd() {
+    mkdir "$1" && z "$1"
+}
+eval "$(zoxide init zsh)"
+PATH="$PATH":"$HOME/scripts/"
+PATH="$PATH":"$HOME/lua/lua-5.4.8/" 
+PATH="$PATH":"$HOME/.local/bin" 
+PATH="$PATH":"$HOME/go/bin/"
+
+#wal
+(cat ~/.cache/wal/sequences)
+
+#pywal for dmenu
+# Import the colors.
+. "${HOME}/.cache/wal/colors.sh"
+
+# Create the alias.
+alias dmen='dmenu_run -nb "$color0" -nf "$color15" -sb "$color1" -sf "$color15"'
