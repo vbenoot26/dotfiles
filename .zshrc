@@ -72,6 +72,12 @@ alias ls='ls --color'
 alias vim='nvim'
 alias c='clear'
 alias v='nvim .'
-
+alias now='date "+%H:%M"'
+alias uit='shutdown -h now'
 eval "$(zoxide init zsh)"
 PATH="$PATH":"$HOME/scripts/"
+PATH="$PATH":"$HOME/go/bin/"
+
+if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
+    exec startx
+fi

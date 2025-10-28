@@ -213,7 +213,7 @@ default_border pixel 1
 default_floating_border pixel 1
 hide_edge_borders smart
 
-exec_always feh --bg-scale ~/Fotos/stars.jpeg
+exec_always feh --bg-scale ~/Fotos/nebula.jpeg
 
 assign [class="Spotify"] $ws3
 exec --no-startup-id spotify
