@@ -48,7 +48,7 @@ zinit cdreplay -q
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Keybindings
-set -o vi
+bindkey -e
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
@@ -84,9 +84,13 @@ mkcd() {
     mkdir "$1" && z "$1"
 }
 eval "$(zoxide init zsh)"
+
 PATH="$PATH":"$HOME/scripts/"
 PATH="$PATH":"$HOME/lua/lua-5.4.8/" 
 PATH="$PATH":"$HOME/.local/bin" 
 PATH="$PATH":"$HOME/go/bin"
+PATH="$PATH":"$HOME/.cargo/bin"
 
 GOFLAGS="-tags=test"
+
+export BWS_ACCESS_TOKEN=$(security find-generic-password -a "$USER" -s "bws-access-token" -w 2>/dev/null)
