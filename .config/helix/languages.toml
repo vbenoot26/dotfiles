@@ -19,9 +19,6 @@ language-servers = ["lua-language-server"]
 formatter = { command = "stylua", args = [ "-" ] }
 roots =  ["/Applications/love.app/Contents/Resources"] 
 
-[language-server.golangci-lint-lsp]
-command = "golangci-lint run --out-format json --issues-exit-code=1"
-
 [language-server.gopls]
 command = "gopls"
 
