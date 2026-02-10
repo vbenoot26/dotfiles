@@ -6,6 +6,6 @@ opacity = 0.6
 option_as_alt = 'Both'
 
 [[keyboard.bindings]]
-key = "T"
+key = "B"
 mods = "Control"
 command = { program = "/Users/vincentbenoot/scripts/toggle_trans" }

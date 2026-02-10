@@ -1,0 +1,9 @@
+{
+  "permission": {
+    "glob": "allow",
+    "read": "allow",
+    "bash": {
+      "ls *": "allow"
+    }
+  }
+}
