@@ -1,4 +1,4 @@
-theme = "peachpuff"
+theme = "aoTrans"
 
 [keys.normal]
 C-h = "jump_view_left"
