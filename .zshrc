@@ -94,3 +94,6 @@ PATH="$PATH":"$HOME/.cargo/bin"
 GOFLAGS="-tags=test"
 
 export BWS_ACCESS_TOKEN=$(security find-generic-password -a "$USER" -s "bws-access-token" -w 2>/dev/null)
+
+export EDITOR=hx
+export GIT_EDITOR=hx
