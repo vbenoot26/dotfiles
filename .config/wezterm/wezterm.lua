@@ -22,7 +22,7 @@ config.window_padding = {
 }
 
 config.inactive_pane_hsb = {
-	saturation = 0.3,
+	saturation = 0.5,
 	brightness = 0.4,
 }
 
@@ -56,6 +56,8 @@ config.keys = {
 	{ key = "l", mods = "CMD", action = act.ActivatePaneDirection("Right") },
 	{ key = "j", mods = "CMD", action = act.ActivatePaneDirection("Down") },
 	{ key = "k", mods = "CMD", action = act.ActivatePaneDirection("Up") },
+
+	{ key = "t", mods = "CTRL", action = toggleTrans.create_toggle_action(config.window_background_opacity) },
 }
 
 wezterm.on('augment-command-palette', function(window, pane)
@@ -133,6 +135,6 @@ config.window_frame = {
 	font_size = 15.0,
 }
 
-config.window_background_opacity = 0.6
+config.window_background_opacity = require 'opacity'
 
 return config

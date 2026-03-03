@@ -1,8 +1,13 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "permission": {
-    "glob": "allow",
     "read": "allow",
+    "glob": "allow",
+    "grep": {
+      "*": "allow",
+      ".env": "deny",
+      ".env.*": "deny"
+    },
     "bash": {
       "ls *": "allow"
     }

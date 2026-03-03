@@ -8,19 +8,19 @@ function M.new(dir)
 	}, M)
 end
 
-local mux = wezterm.mux
 
 function M:all_dirs()
 	local projects = {}
 
 	for _, dir in ipairs(wezterm.glob(self.dir .. "/*")) do
-		table.insert(projects, dir)
+		table.insert(projects, {label = dir} )
 	end
 
 	return projects
 end
 
 local function dev_workspace(child_window, child_pane, cwd, label)
+	local mux = wezterm.mux
 	local tab, helix_pane, window = mux.spawn_window({
 		workspace = label,
 		cwd = label,
@@ -43,16 +43,12 @@ local function dev_workspace(child_window, child_pane, cwd, label)
 end
 
 function M:choose_project()
-	local choices = {}
-	for _, value in ipairs(self:all_dirs()) do
-		table.insert(choices, { label = value })
-	end
-
 	return wezterm.action.InputSelector({
 		title = "Projects",
-		choices = choices,
+		choices = self:all_dirs(),
 		fuzzy = true,
 		action = wezterm.action_callback(function(child_window, child_pane, id, label)
+			local mux = wezterm.mux
 			if not label then
 				return
 			end

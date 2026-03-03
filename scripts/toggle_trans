@@ -1,14 +1,10 @@
 #!/usr/bin/env zsh
 
-## If alacritty.yml does not exist, raise an alert
-[[ ! -f ~/.config/alacritty/alacritty.toml ]] && \
-    notify-send "alacritty.toml does not exist" && exit 0
-
 ## Fetch background_opacity from alacritty.yml
-opacity=$(awk -F'=' '$1 == "opacity " {print $2; exit}' \
-    ~/.config/alacritty/alacritty.toml | tr -d '[:space:]')
+opacity=$(awk -F' ' '$1 == "return" {print $2; exit}' \
+    ~/.config/wezterm/opacity.lua) 
 
-echo $opacity
+echo "opacity: $opacity yeah"
 
 ## Assign toggle opacity value
 case $opacity in
@@ -23,5 +19,4 @@ esac
 echo $toggle_opacity
 
 ## Replace opacity value in alacritty.yml
-sed -i -- "s/opacity = $opacity/opacity = $toggle_opacity/" \
-    ~/.config/alacritty/alacritty.toml
+echo "return $toggle_opacity" > ~/.config/wezterm/opacity.lua
