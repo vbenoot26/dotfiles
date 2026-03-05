@@ -12,16 +12,16 @@ end
 function M:all_dirs()
 	local projects = {}
 
-	for _, dir in ipairs(wezterm.glob(self.dir .. "/*")) do
+	for _, dir in wezterm.glob(self.dir .. "/*") do
 		table.insert(projects, {label = dir} )
 	end
 
 	return projects
 end
 
-local function dev_workspace(child_window, child_pane, cwd, label)
+local function dev_workspace(cwd, label)
 	local mux = wezterm.mux
-	local tab, helix_pane, window = mux.spawn_window({
+	local _, helix_pane, _ = mux.spawn_window({
 		workspace = label,
 		cwd = label,
 	})
@@ -63,7 +63,7 @@ function M:choose_project()
 			end
 
 			if not workspace_exists then
-				dev_workspace(child_window, child_pane, label, label)
+				dev_workspace(label, label)
 			end
 
 			child_window:perform_action(

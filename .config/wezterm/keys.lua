@@ -1,8 +1,7 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
-local openinhelix = require("open-helix")
-local toggleTrans = require 'toggle_trans'
-local projects = require("projects")
+local openinhelix = require("actions.open-helix")
+local projects = require("actions.projects")
 
 local project_dir = wezterm.home_dir .. "/projects/nova"
 
@@ -32,6 +31,4 @@ return {
 	{ key = "l", mods = "CMD", action = act.ActivatePaneDirection("Right") },
 	{ key = "j", mods = "CMD", action = act.ActivatePaneDirection("Down") },
 	{ key = "k", mods = "CMD", action = act.ActivatePaneDirection("Up") },
-
-	{ key = "t", mods = "CTRL", action = toggleTrans.create_toggle_action(config.window_background_opacity) },
 }
