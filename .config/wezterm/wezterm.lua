@@ -26,7 +26,8 @@ config.window_frame = {
 }
 
 require 'hooks'
-config.keys = require 'keys'
+
+require('keys').apply(config)
 config.window_background_opacity = require 'opacity'
 
 return config
