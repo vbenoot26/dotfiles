@@ -1,0 +1,2 @@
+echo "$@"
+fish ~/scripts/revpr.fish $@
