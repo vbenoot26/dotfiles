@@ -1,0 +1,3 @@
+#!/bin/bash
+
+git reset --hard $(git -C ../main rev-parse HEAD)

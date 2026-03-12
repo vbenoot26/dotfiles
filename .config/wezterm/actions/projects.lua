@@ -12,7 +12,7 @@ end
 function M:all_dirs()
 	local projects = {}
 
-	for _, dir in wezterm.glob(self.dir .. "/*") do
+	for _, dir in ipairs(wezterm.glob(self.dir .. "/*")) do
 		table.insert(projects, {label = dir} )
 	end
 
@@ -20,26 +20,37 @@ function M:all_dirs()
 end
 
 local function dev_workspace(cwd, label)
-	local mux = wezterm.mux
-	local _, helix_pane, _ = mux.spawn_window({
+	local _, helix_pane, window = wezterm.mux.spawn_window({
 		workspace = label,
-		cwd = label,
+		cwd = cwd,
 	})
 
-	local opencode_pane = helix_pane:split({
+	local lazygit_pane = helix_pane:split({
 		direction = "Right",
-		size = 0.3,
+		size = 0.5,
 		cwd = cwd,
 	})
 
-	opencode_pane:split({
+	lazygit_pane:split({
 		direction = "Bottom",
-		size = 0.6,
-		cwd = cwd,
+		size = 0.3,
+		cwd = cwd .. "/main",
 	})
 
-	helix_pane:send_text("hx .\n")
+	helix_pane:send_text("hx main\n")
+	lazygit_pane:send_text("lazygit -p main\n")
+
+	local _, test_pane = window:spawn_tab {cwd = cwd .. "/main"}
+
+	local opencode_pane = test_pane:split({
+		direction = "Right",
+		size = 0.5,
+		cwd = cwd .. "/clanker",
+	})
+
 	opencode_pane:send_text("opencode\n")
+
+	helix_pane:activate {}
 end
 
 function M:choose_project()
