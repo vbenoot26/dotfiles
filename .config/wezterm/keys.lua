@@ -8,8 +8,8 @@ M.apply = function(config)
 
 	local project_dir = wezterm.home_dir .. "/projects/nova"
 
-	local novapicker = projects.new(project_dir, require 'workspaces.nova')
-	local generalpicker = projects.new(wezterm.home_dir, require 'workspaces.general')
+	local novapicker = projects.new(project_dir)
+	local generalpicker = projects.new(wezterm.home_dir)
 
 	config.keys = {
 		{ key = "9", mods = "CMD", action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },

@@ -2,10 +2,9 @@ local wezterm = require("wezterm")
 local M = {}
 M.__index = M
 
-function M.new(dir, workspace)
+function M.new(dir)
 	return setmetatable({
 		dir = dir,
-		workspace = workspace,
 	}, M)
 end
 
@@ -41,7 +40,10 @@ function M:choose_project()
 			end
 
 			if not workspace_exists then
-				self.workspace.create(label, label)
+				local get = require('workspaces.get')
+				local workspace = get.getWorkspace(label) or require('workspaces.general')
+
+				workspace.create(label, label)
 			end
 
 			child_window:perform_action(
