@@ -76,6 +76,7 @@ alias uit='shutdown -h now'
 alias l='ls -lah'
 alias mt='make test'
 alias ml='make lint'
+alias gotest='opencode run --agent gotest "Write tests for the latest commit"'
 #antlr
 # alias antlr4='java -jar ~/ANTLR/antlr-4.13.1-complete.jar'
 # alias grun='java org.antlr.v4.gui.TestRig'
