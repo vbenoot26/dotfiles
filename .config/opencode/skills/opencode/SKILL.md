@@ -178,28 +178,27 @@ Available tool flags:
 
 ### Permission Overrides
 
-**Important**: Agent-level permissions use simple key-value syntax (unlike opencode.json):
+Agent-level permissions support both simple values and granular pattern syntax (same as opencode.json):
 
 ```yaml
+# Simple value — applies to all inputs
 permission:
-  read: deny      # Simple value, not nested patterns
   write: deny
-  bash: ask       # Will prompt for each bash command
   webfetch: allow
-```
 
-**Do NOT use nested patterns in agent files** (those are only for opencode.json):
-```yaml
-# ❌ WRONG - will cause validation error
+# Granular patterns — last matching rule wins
 permission:
   bash:
-    "*": deny
-    "man *": allow
-
-# ✅ CORRECT
-permission:
-  bash: ask
+    "*": ask
+    "git diff": allow
+    "git log*": allow
+    "grep *": allow
+  external_directory:
+    "~/.config/opencode/**": allow
+  edit: deny
 ```
+
+Both `~` and `$HOME` are expanded in patterns. The `tools` config (deprecated) uses booleans; prefer `permission` for new configs.
 
 ### Agent Design Patterns
 
@@ -281,7 +280,6 @@ Error: Configuration is invalid at /path/to/agent.md
 ```
 
 Common issues:
-- Nested permission syntax (use simple key-value)
 - Invalid mode (must be `primary` or `subagent`)
 - Invalid permission values (must be `allow`, `ask`, or `deny`)
 

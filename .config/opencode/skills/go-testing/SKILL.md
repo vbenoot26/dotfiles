@@ -105,6 +105,26 @@ func TestFunctionName_Errors(t *testing.T) {
 - Verifying assertions after mock execution (verify inside mock functions)
 - **Conditional logic in tests** - If table-driven test cases require different setup branches (if/else), split them into separate test functions instead
 - **Asserting unexported error values** - For unexported/internal errors, only assert `require.Error(t, err)`. Do NOT use `Contains`, `ErrorIs`, or similar to check unexported error messages or values. The exact error is an implementation detail. Only assert specific error values for exported errors.
+- **Creating your own context** - NEVER use `context.Background()` or `context.TODO()` in tests when a test-provided context is available. Use `t.Context()` in standard tests or `suite.T().Context()` in test suites. Creating your own context should always be the last resort.
+- **Using if/else inside test loops** - Do NOT use if/else cases inside test loops to differentiate assertions. If the setup or assertions are different, write separate tests instead of branching within one test.
+
+## Context Usage in Tests (CRITICAL)
+- NEVER create your own context (e.g. `context.Background()`) when a test-provided context is available
+- In standard tests, use `t.Context()`:
+  ```go
+  func TestSomething(t *testing.T) {
+      ctx := t.Context()
+      result, err := myFunc(ctx, args)
+  }
+  ```
+- In test suites, use `suite.T().Context()`:
+  ```go
+  func (s *MySuite) TestSomething() {
+      ctx := s.T().Context()
+      result, err := myFunc(ctx, args)
+  }
+  ```
+- Creating your own context (`context.Background()`, `context.TODO()`) should always be the last resort, only when no test context is available
 
 ## Key Patterns to Use
 - Behavioral assertions (verify data stored, state changed)
