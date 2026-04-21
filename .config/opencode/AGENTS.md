@@ -21,3 +21,12 @@ Agents should reference README.md when:
 - Understanding project conventions and best practices
 - Providing guidance on development workflows
 - Understanding dependencies and architecture
+
+### CLANKER Comments
+
+CLANKER comments are inline feedback left by the user in source code. They follow the format `CLANKER: <message>`.
+
+When asked to "check the clanker comments", agents MUST:
+1. Search the codebase for `CLANKER:` using grep with surrounding context (e.g., 3 lines above and below)
+2. Read and address each comment found
+3. After resolving a CLANKER comment, remove it from the code
