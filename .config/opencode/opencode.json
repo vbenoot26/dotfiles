@@ -26,6 +26,9 @@
       "tail *": "allow",
       "wc *": "allow"
     },
+    "external_directory": {
+      "/Users/vincentbenoot/.config/opencode/*": "allow"
+    },
     "skill": "allow",
     "todowrite": "allow"
   }
