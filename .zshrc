@@ -74,20 +74,18 @@ alias ll='ls -lah'
 alias vim='nvim'
 alias c='clear'
 alias v='nvim .'
+alias l='ls -lah'
+alias h='helix .'
 alias now='date "+%H:%M"'
 alias uit='shutdown -h now'
 eval "$(zoxide init zsh)"
 PATH="$PATH":"$HOME/scripts/"
 PATH="$PATH":"$HOME/go/bin/"
+PATH="$HOME/.cargo/bin:$PATH"
 
 if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
     exec startx
 fi
-alias uit='shutdown -h now'
-alias l='ls -lah'
-#antlr
-# alias antlr4='java -jar ~/ANTLR/antlr-4.13.1-complete.jar'
-# alias grun='java org.antlr.v4.gui.TestRig'
 
 mkcd() {
     mkdir "$1" && z "$1"

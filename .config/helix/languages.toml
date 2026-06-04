@@ -23,3 +23,6 @@ name = "lua"
 language-servers = ["lua-language-server"]
 formatter = { command = "stylua", args = [ "-" ] }
 roots =  ["/Applications/love.app/Contents/Resources"] 
+
+[language-server.rust-analyzer.config]
+command = "clippy"
