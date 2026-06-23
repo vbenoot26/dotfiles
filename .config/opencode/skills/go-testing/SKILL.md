@@ -12,6 +12,9 @@ description: Go testing standards and conventions for writing behavioral, well-s
 - **NO call count assertions** like `assert.Len()`, `assert.Called()`, or counting how many times a function was called
 - Focus on verifying data correctness and state changes, not internal mechanics
 
+### Mock Generation (CRITICAL)
+- **NEVER write your own mock implementations manually.** Instead, always run `make mocks` to generate mocks. If a mock is missing, it means the interface is missing mockery annotations in the implementation file — report this to the user rather than writing a manual mock.
+
 ### Mocking Strategy
 - Use mocks to **verify data correctness written to DB**, not to verify how many times something was called
 - **Don't mock service functions** - only mock repository/client interfaces
@@ -133,6 +136,7 @@ func TestFunctionName_Errors(t *testing.T) {
 - Table-driven error subtests
 - Assertions inside mock functions for input verification
 - Self-documenting code with minimal comments
+- Use `uuid.NewString()` from `github.com/google/uuid` for test data instead of hardcoded UUIDs. This generates unique IDs for each test run and prevents accidental test data coupling.
 
 ## Workflow
 - Always run `make lint` after writing tests and fix any lint issues in test files before presenting results

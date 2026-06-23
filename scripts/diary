@@ -1,0 +1,40 @@
+#!/bin/bash
+
+DIARY_DIR="$HOME/notes/dairy"
+TODAY=$(date +%F)
+FILE="$DIARY_DIR/$TODAY.md"
+
+if [ ! -d "$DIARY_DIR" ]; then
+  mkdir -p "$DIARY_DIR"
+fi
+
+if [ -f "$FILE" ]; then
+  echo "Diary for $TODAY already exists"
+  ${EDITOR:-vi} "$FILE"
+  exit 0
+fi
+
+# Find previous entry's "Things to pick up" section
+PREV_FILE=$(ls "$DIARY_DIR"/*.md 2>/dev/null | sort | grep -v "$TODAY" | tail -1)
+PREV_TODOS=""
+if [ -n "$PREV_FILE" ]; then
+  PREV_TODOS=$(sed -n '/^## Things to pick up$/,$ { /^## Things to pick up$/d; p; }' "$PREV_FILE")
+fi
+
+cat > "$FILE" << EOF
+# Diary $TODAY
+
+Dear diary
+
+## Things I did
+<!-- what ate your time today? wins, frustrations, just tag them -->
+
+## What I learned
+<!-- a pattern, a tool, a gotcha, a procedure, a solution worth remembering -->
+
+## Things to pick up
+<!-- tomorrow's you will thank you -->
+$PREV_TODOS
+EOF
+
+${EDITOR:-vi} "$FILE"

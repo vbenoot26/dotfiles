@@ -98,3 +98,5 @@ export BWS_ACCESS_TOKEN=$(security find-generic-password -a "$USER" -s "bws-acce
 
 export EDITOR=hx
 export GIT_EDITOR=hx
+export DOCKER_HOST="$(docker context inspect -f='{{.Endpoints.docker.Host}}')"
+source /Users/vincentbenoot/.safe-chain/scripts/init-posix.sh # Safe-chain Zsh initialization script

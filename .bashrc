@@ -133,3 +133,4 @@ export NVM_DIR="$HOME/.nvm"
 eval $(thefuck --alias)
 eval $(thefuck --alias FUCK)
 . "$HOME/.cargo/env"
+source /Users/vincentbenoot/.safe-chain/scripts/init-posix.sh # Safe-chain bash initialization script

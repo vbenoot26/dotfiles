@@ -7,9 +7,11 @@ M.apply = function(config)
 	local projects = require("actions.projects")
 
 	local project_dir = wezterm.home_dir .. "/projects/nova"
+	local personal_dir = wezterm.home_dir .. "/projects/personal"
 
 	local novapicker = projects.new(project_dir)
 	local generalpicker = projects.new(wezterm.home_dir)
+	local personalpicker = projects.new(personal_dir)
 
 	config.keys = {
 		{ key = "9", mods = "CMD", action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
@@ -18,6 +20,8 @@ M.apply = function(config)
 
 		{ key = ";", mods = "CMD", action = novapicker:choose_project() },
 		{ key = "f", mods = "CMD", action = generalpicker:choose_project() },
+		{ key = "'", mods = "CMD", action = personalpicker:choose_project() },
+
 
 		{ key = "Enter", mods = "CMD", action = act.TogglePaneZoomState },
 
