@@ -108,8 +108,9 @@ func TestFunctionName_Errors(t *testing.T) {
 - Verifying assertions after mock execution (verify inside mock functions)
 - **Conditional logic in tests** - If table-driven test cases require different setup branches (if/else), split them into separate test functions instead
 - **Asserting unexported error values** - For unexported/internal errors, only assert `require.Error(t, err)`. Do NOT use `Contains`, `ErrorIs`, or similar to check unexported error messages or values. The exact error is an implementation detail. Only assert specific error values for exported errors.
-- **Creating your own context** - NEVER use `context.Background()` or `context.TODO()` in tests when a test-provided context is available. Use `t.Context()` in standard tests or `suite.T().Context()` in test suites. Creating your own context should always be the last resort.
+- **Creating your own context** - NEVER use `context.Background()` or `context.TODO()` in tests when a test-provided context is available. Use `t.Context()` in standard tests or helper functions. Creating your own context should always be the last resort.
 - **Using if/else inside test loops** - Do NOT use if/else cases inside test loops to differentiate assertions. If the setup or assertions are different, write separate tests instead of branching within one test.
+- **Testify suites** - Avoid using `testify/suite` for unit tests. Instead, use helper functions to set up test fixtures. Only use suites if they provide significant organizational value and are hard to avoid. Suites add unnecessary complexity and coupling to test state. Prefer simple, standalone test functions with helper functions like `setupMyRepo(t *testing.T)` for common setup.
 
 ## Context Usage in Tests (CRITICAL)
 - NEVER create your own context (e.g. `context.Background()`) when a test-provided context is available
@@ -120,11 +121,13 @@ func TestFunctionName_Errors(t *testing.T) {
       result, err := myFunc(ctx, args)
   }
   ```
-- In test suites, use `suite.T().Context()`:
+- In helper functions, pass `t` and use `t.Context()`:
   ```go
-  func (s *MySuite) TestSomething() {
-      ctx := s.T().Context()
-      result, err := myFunc(ctx, args)
+  func setupMyRepo(t *testing.T) *MyRepo {
+      t.Helper()
+      ctx := t.Context()
+      // use ctx for setup
+      return repo
   }
   ```
 - Creating your own context (`context.Background()`, `context.TODO()`) should always be the last resort, only when no test context is available
