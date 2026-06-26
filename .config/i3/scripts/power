@@ -1,0 +1,25 @@
+#!/bin/bash
+echo "⏻"
+
+if [ "$BLOCK_BUTTON" = "1" ]; then
+    fg=$(xrdb -query | grep 'i3wm\.color7' | awk '{print $NF}')
+    bg=$(xrdb -query | grep 'i3wm\.color2' | awk '{print $NF}')
+    : "${fg:=#FFFFFF}"
+    : "${bg:=#000000}"
+
+    choice=$(printf "  Lock\n  Logout\n  Reboot\n⏻  Shutdown\n✗  Cancel" | \
+        rofi -dmenu -p "Power" -nb "$bg" -nf "$fg" -sb "$fg" -sf "$bg")
+
+    case "$choice" in
+        *Lock)     i3lock ;;
+        *Logout)   i3-msg exit ;;
+        *Reboot)
+            confirm=$(printf "Cancel\nYes" | rofi -dmenu -p "Reboot?" -nb "$bg" -nf "$fg" -sb "$fg" -sf "$bg")
+            [ "$confirm" = "Yes" ] && systemctl reboot
+            ;;
+        *Shutdown)
+            confirm=$(printf "Cancel\nYes" | rofi -dmenu -p "Shutdown?" -nb "$bg" -nf "$fg" -sb "$fg" -sf "$bg")
+            [ "$confirm" = "Yes" ] && systemctl poweroff
+            ;;
+    esac
+fi

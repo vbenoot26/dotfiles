@@ -1,0 +1,7 @@
+#!/bin/bash
+mode=$(i3-msg -t get_bar_config bar-0 | sed -n 's/.*"mode":"\([^"]*\)".*/\1/p')
+if [ "$mode" = "hide" ]; then
+    i3-msg 'bar mode dock' >/dev/null
+else
+    i3-msg 'bar mode hide' >/dev/null
+fi

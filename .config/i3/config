@@ -11,9 +11,9 @@
 
 set $mod Mod4
 
-#import colors from x server (for pywal reasons)
-set_from_resource $fg i3wm.color7 #464A55
-set_from_resource $bg i3wm.color2 #f3f4f5
+# Catppuccin Mocha colors
+set $fg #CDD6F4
+set $bg #1E1E2E
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -39,12 +39,12 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+set $refresh_i3blocks killall -SIGRTMIN+1 i3blocks
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3blocks
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3blocks
 
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3blocks
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3blocks
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -157,6 +157,9 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
+# toggle bar between hide and always-visible
+bindsym $mod+Shift+b exec --no-startup-id ~/.config/i3/scripts/toggle_bar
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
@@ -184,48 +187,27 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Set colors from Xresources
-# Change 'color7' and 'color2' to whatever colors you want i3 to use 
-# from the generated scheme.
-# NOTE: The '#f0f0f0' in the lines below is the color i3 will use if
-# it fails to get colors from Xresources.
-
-# class                 border  backgr. text indicator child_border
-client.focused          $bg     $bg     $fg  $bg       $bg
-client.focused_inactive $bg     $bg     $fg  $bg       $bg
-client.unfocused        $bg     $bg     $fg  $bg       $bg
-client.urgent           $bg     $bg     $fg  $bg       $bg
-client.placeholder      $bg     $bg     $fg  $bg       $bg
+# class                 border  backgr. text       indicator  child_border
+client.focused          $bg     $bg     $fg        #B4BEFE    $bg
+client.focused_inactive $bg     $bg     #6C7086    #6C7086    $bg
+client.unfocused        $bg     $bg     #6C7086    #6C7086    $bg
+client.urgent           #F38BA8 #F38BA8 $bg        #F38BA8    #F38BA8
+client.placeholder      $bg     $bg     #6C7086    #6C7086    $bg
 
 client.background       $bg
 
-# i3status
-
-# set $bg-color 	         #464A55
-# set $inactive-bg-color   #2f343f
-# set $text-color          #f3f4f5
-# set $inactive-text-color #676E7D
-# set $urgent-bg-color     #E53935
-#
-# # window colors
-# #                       border              background         text                 indicator
-# client.focused          $bg-color           $bg-color          $text-color          $bg-color
-# client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color  $inactive-bg-color
-# client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
-# client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $urgent-bg-color
-#
-# # bar
+# bar
 bar {
     mode hide
     hidden_state hide
     modifier $mod
     strip_workspace_numbers yes
-  	status_command i3blocks -c /home/vincent/.config/i3/i3blocks.conf
+  	status_command i3blocks -c /home/vincentb/.config/i3/i3blocks.conf
     tray_output none
     colors {
         background $bg
         statusline $fg
-        separator $fg
+        separator #45475A
     }
 }
 
@@ -253,7 +235,8 @@ exec --no-startup-id spotify
 exec_always --no-startup-id pkaction
 
 exec --no-startup-id i3-msg "workspace $ws1; exec alacritty"
-exec --no-startup-id i3-msg "workspace $ws2; exec firefox"
+exec --no-startup-id i3-msg "workspace $ws2; exec brave"
+exec --no-startup-id i3-msg "workspace $ws3; exec spotify-launcher"
 
 exec --no-startup-id compton --config ~/.config/compton.conf
 exec_always xrandr --output DP-2 --right-of DP-1
