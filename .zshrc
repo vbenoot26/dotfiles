@@ -78,6 +78,7 @@ alias l='ls -lah'
 alias h='helix .'
 alias now='date "+%H:%M"'
 alias uit='shutdown -h now'
+alias minecraft='docker compose -f ~/minecraft/docker-compose.yaml up -d '
 eval "$(zoxide init zsh)"
 PATH="$PATH":"$HOME/scripts/"
 PATH="$PATH":"$HOME/go/bin/"
