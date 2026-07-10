@@ -1,0 +1,183 @@
+#!/usr/bin/env bash
+
+# SPDX-FileCopyrightText: 2022-2023 quantenzitrone <@quantenzitrone:matrix.org>
+# SPDX-License-Identifier: GPL-3.0-or-later
+function headline() {
+	tput setaf 9
+	tput bold
+	printf "%s" "$*"
+	tput sgr0
+}
+function code() {
+	tput setaf 12
+	printf "%s" "$*"
+	tput sgr0
+}
+function underline() {
+	tput smul
+	printf "%s" "$*"
+	tput sgr0
+}
+
+function error() {
+	tput setaf 9
+	echo -n "error:"
+	tput sgr0
+	echo "$*"
+}
+function show_help() {
+	cat <<EOF
+$(headline NAME)
+	$(code ascii3lock) - lock the screen with i3lock and show a random terminal ascii art program in the background
+	
+$(headline SYNOPSIS)
+    $(code acsii3lock) [OPTIONS]
+
+$(headline DESCRIPTION)
+    Opens alacritty in full screen and executes a random ascii art screen saver like cmatrix or cbonsai in it.
+	When music is playing an audio visualiser (vis or cava) is instead picked.
+
+	$(code -n), $(code --no-lock)
+		do not lock the screen
+	
+	$(code -s), $(code --screensaver) <number>
+		use the specified screensaver number, modulo the number of screensavers
+
+    $(code -h), $(code --help)
+		show this help text and exit
+
+$(headline EXAMPLES)
+	$(code ascii3lock)
+		-> locks the screen and executes a screensaver
+	$(code ascii3lock -n)
+		-> executes the screensaver, but doesn't lock the screen
+	$(code ascii3lock -s 0)
+		-> selects screensaver with index 0, which will be vis if audio is playing and aafire else
+
+$(headline AUTHORS)
+	Written by Quantenzitrone.
+	Credits to all the screensaver application authors:
+	- Darby Payne for cli-visualizer
+	- karlstav for cava
+	- Jan Hubicka for aalib
+	- all asciiquarium contributors, especially Kirk Baucom for the creation and UndeadLeech for the transparency patch
+	- John Allbritten for cbonsai
+	- AngelJumbo for lavat and sssnake
+	- Luna Razzaghipour and lhvy for pipes-rs (and Yu-Jie Lin for the idea with pipes.sh)
+	- Leo Mav for retrocube
+	- all the people that wrote fortune and cowsay
+	- moe for lolcat
+	Also the the other dependencies:
+	- Michael Stapelberg and all i3lock contributors
+	- Swaylock contributors
+	- Christian Duerr and all alacritty contributors
+	- Tony Crisci and all playerctl contributors
+EOF
+}
+
+function lockscreen() {
+	# use swaylock if WAYLAND_DISPLAY is set, i3lock otherwise, if $DISPLAY is not set exit
+	if test -v WAYLAND_DISPLAY; then
+		# TODO find a feasable way to set keyboard layout to default on different wayland compositors
+		swaylock -n -c 00000000
+	elif test -v DISPLAY; then
+		# change to default keyboard layout if XKB_DEFAULT_LAYOUT is set
+		if test -v XKB_DEFAULT_LAYOUT; then
+			setxkbmap "$XKB_DEFAULT_LAYOUT" "${XKB_DEFAULT_VARIANT:-""}"
+		fi
+		i3lock -n -c 00000000
+	else
+		echo "could not detect xorg or wayland"
+		echo "is \$XDG_SESSION_TYPE set?"
+		exit 1
+	fi
+}
+
+function getRandomScreensaver() {
+	# setting the fancy screenbackground applications
+	if [ "$(playerctl status 2>/dev/null)" = "Playing" ]; then
+		screensavers=(
+			"vis"
+			"cava"
+		)
+	else
+		# repeat everything a few times to not get cmatrix everytime
+		colors=("red" "yellow" "green" "cyan" "blue" "magenta")
+		numofcolors=${#colors[@]}
+		randomindex=$((RANDOM % numofcolors))
+		screensavers=(
+			# aafire
+			"aafire"
+			# asciiquarium
+			"asciiquarium -t"
+			# cbonsai
+			"cbonsai -L 70 -li"
+			# cmatrix
+			"cmatrix -C ${colors[$randomindex]}"
+			# lavat
+			"lavat -R 1 -c ${colors[$randomindex]} -k ${colors[$(((randomindex + 1) % numofcolors))]}"
+			# pipes-rs
+			"pipes-rs -k curved -p 3 -t 0.1"
+			# retrocube
+			"cube -wi 200 -de 200 -he 200 -sx 0.99 -sy 0.90 -up"
+			# sssnake
+			"sssnake -m screensaver -s 20 --try-hard 2"
+			# fortune cowsay center lolcat
+			"fortune -a -l -n 300 | cowsay --random -W 400 | center | lolcat; read -p \"\""
+			# TODO add more
+			# - some tty clock? - would that be boring
+		)
+	fi
+
+	# returning a random fancy screenbackground application
+	echo "${screensavers[$1 % ${#screensavers[@]}]}"
+}
+
+# process CLI arguments
+################################################
+lock=true
+scindex=$RANDOM
+shopt -s extglob
+while [[ $# -gt 0 ]]; do
+	case $1 in
+	-h | --help)
+		show_help
+		exit 0
+		;;
+	-n | --no-lock)
+		lock=false
+		shift
+		;;
+	-s | --screensaver)
+		scindex=$2
+		shift
+		shift
+		;;
+	*)
+		echo "Unexpected option $1"
+		exit 1
+		;;
+	esac
+done
+
+# use alacritty as default, because
+# + is minimal (no bar at the top, no bloat)
+# + gpu accelerated reducing lag in heavy programs like aafire
+# + can fullscreen on startup
+# + works in wayland natively
+# + pixel-perfect font rendering especially for cava and vis (unlike xterm)
+# + correct color rendering for vis (unlike konsole)
+# + i use alacritty as my default terminal
+# - has unfortunately no functionality to wait with the executing command until the window is mapped like xterm with -wf
+#   i reduce the possibility of this race condition by waiting 1 second before executing the screensaver, which is not really optimal, but the best solution i currently see for this problem
+
+screensaver="$(getRandomScreensaver "$scindex")"
+echo "using screensaver: $screensaver"
+if $lock; then
+	alacritty -o 'window.startup_mode="Fullscreen"' -e sh -c "sleep 0.2; $screensaver" &
+	TERMPID=$(pgrep -P $$) # pid of the started terminal
+	lockscreen
+	kill "$TERMPID"
+else
+	alacritty -o 'window.startup_mode="Fullscreen"' -e sh -c "sleep 0.2; $(getRandomScreensaver "$scindex")"
+fi
