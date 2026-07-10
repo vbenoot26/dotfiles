@@ -53,5 +53,6 @@ pactl set-card-profile alsa_card.pci-0000_00_1f.3 output:analog-stereo+input:ana
 # audio: set default sink to onboard analog (WirePlumber ignores pactl for this)
 pw-metadata -n default 0 default.audio.sink "alsa_output.pci-0000_00_1f.3.analog-stereo"
 
+nvidia-settings --assign CurrentMetaMode="DPY-4: 3840x2160 {ForceFullCompositionPipeline=On}"
+
 exec $twm
-xrandr --output DP-2 --right-of DP-1

@@ -238,10 +238,9 @@ exec --no-startup-id i3-msg "workspace $ws1; exec alacritty"
 exec --no-startup-id i3-msg "workspace $ws2; exec brave"
 exec --no-startup-id i3-msg "workspace $ws3; exec spotify-launcher"
 
-exec --no-startup-id compton --config ~/.config/compton.conf
 exec_always xrandr --output DP-2 --right-of DP-1
 exec_always xrandr --output HDMI-0 --same-as DP-1
 
 exec --no-startup-id xss-lock --transfer-sleep-lock -- ascii3lock
 
-exec_always picom -f
+exec_always picom
