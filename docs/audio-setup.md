@@ -112,25 +112,25 @@ ALSA hardware paths (from `aplay -l`):
 
 Card profile and default sink are transient — they reset on reboot.
 
-**Option A — `~/.xinitrc`** (runs once on X11 startup):
+**Key finding:** `pactl set-default-sink` does **not** work when WirePlumber is the session manager (it returns success but the default doesn't change). Use `pw-metadata` instead.
+
+**Recommended — `~/.xinitrc`** (runs once on X11 startup before i3):
 ```bash
 pactl set-card-profile alsa_card.pci-0000_00_1f.3 output:analog-stereo+input:analog-stereo
-pactl set-default-sink alsa_output.pci-0000_00_1f_3.analog-stereo
+pw-metadata -n default 0 default.audio.sink "alsa_output.pci-0000_00_1f.3.analog-stereo"
 ```
 
-**Option B — i3 config** (runs on every i3 restart):
+**Alternative — i3 config** (runs on every i3 restart):
 ```
 exec_always --no-startup-id pactl set-card-profile alsa_card.pci-0000_00_1f.3 output:analog-stereo+input:analog-stereo
-exec_always --no-startup-id pactl set-default-sink alsa_output.pci-0000_00_1f_3.analog-stereo
+exec_always --no-startup-id pw-metadata -n default 0 default.audio.sink "alsa_output.pci-0000_00_1f.3.analog-stereo"
 ```
 
-Note: When setting the default sink in `pactl`, dots in the sink name are sometimes replaced with underscores in config files (`pci-0000_00_1f.3` → `pci-0000_00_1f_3`). Use `pactl list sinks short` to confirm the exact name.
-
-**Option C — WirePlumber** (if installed):
+**WirePlumber Lua rule** (most robust, no need for startup scripts):
 ```
 ~/.config/wireplumber/main.lua.d/51-default-sink.lua
 ```
-This requires a Lua rule — more robust but more code.
+Use this if the startup commands aren't reliable enough.
 
 ## System Info
 

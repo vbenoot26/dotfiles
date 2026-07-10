@@ -48,5 +48,10 @@ if [ -d "$xinitdir"/xinitrc.d ] ; then
 	unset f
 fi
 
+# audio: force ALC897 to analog profile (PipeWire defaults to S/PDIF or HDMI)
+pactl set-card-profile alsa_card.pci-0000_00_1f.3 output:analog-stereo+input:analog-stereo
+# audio: set default sink to onboard analog (WirePlumber ignores pactl for this)
+pw-metadata -n default 0 default.audio.sink "alsa_output.pci-0000_00_1f.3.analog-stereo"
+
 exec $twm
 xrandr --output DP-2 --right-of DP-1
