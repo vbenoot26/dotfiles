@@ -100,3 +100,11 @@ export EDITOR=hx
 export GIT_EDITOR=hx
 export DOCKER_HOST="$(docker context inspect -f='{{.Endpoints.docker.Host}}')"
 source /Users/vincentbenoot/.safe-chain/scripts/init-posix.sh # Safe-chain Zsh initialization script
+
+prc() {
+  gh pr create -l no-changelog || return
+  local url
+  url=$(gh pr view --json url -q .url) || return
+  printf '%s' "$url" | pbcopy
+  echo "Copied: $url"
+}
