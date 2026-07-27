@@ -25,7 +25,7 @@ config.window_frame = {
 	font_size = 15.0,
 }
 
-config.status_update_interval = 200
+config.status_update_interval = 150
 
 require 'hooks'
 
