@@ -1,0 +1,34 @@
+# This is Git's per-user configuration file.
+[user]
+# Please adapt and uncomment the following lines:
+name = vbenoot-itsme
+	email = vincent.benoot@itsme-id.com
+
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true    # Move between files with n/N
+    light = false      # Dark theme (true: light theme)
+    side-by-side = false
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
+
+[includeIf "gitdir:/Users/vincentbenoot/Library/Application Support/wezterm/plugins/"]
+    path = ~/.config/wezterm/.gitconfig
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+[rebase]
+	autosquash = true
+[core]
+	excludesFile = ~/.gitignore
+[pull]
+	rebase = true
+# Conditionally override for WezTerm's plugin directory
