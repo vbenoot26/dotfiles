@@ -193,19 +193,8 @@ client.placeholder      $bg     $bg     #6C7086    #6C7086    $bg
 client.background       $bg
 
 # bar
-bar {
-    mode hide
-    hidden_state hide
-    modifier $mod
-    strip_workspace_numbers yes
-  	status_command i3blocks -c /home/vincentb/.config/i3/i3blocks.conf
-    tray_output none
-    colors {
-        background $bg
-        statusline $fg
-        separator #45475A
-    }
-}
+exec_always --no-startup-id polybar main &
+exec_always --no-startup-id ~/.config/i3/scripts/hover_bar.sh &
 
 default_border pixel 1
 default_floating_border pixel 1
