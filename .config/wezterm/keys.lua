@@ -1,5 +1,6 @@
 local M = {}
 
+
 M.apply = function(config)
 	local wezterm = require("wezterm")
 	local act = wezterm.action
@@ -16,28 +17,35 @@ M.apply = function(config)
 	config.keys = {
 		{ key = "9", mods = "CMD", action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
 		{ key = "n", mods = "CMD", action = act.SwitchWorkspaceRelative(1) },
-		{ key = "p", mods = "CMD", action = act.SwitchWorkspaceRelative(-1) },
+		{
+			key = "n",
+			mods = "SHIFT|CMD",
+			action = act.SpawnCommandInNewTab({
+				args = { "ssh", "itsme", "-t", "k9s; exec $SHELL" },
+			})
+		},
+		{ key = "p",     mods = "CMD",       action = act.SwitchWorkspaceRelative(-1) },
 
-		{ key = ";", mods = "CMD", action = novapicker:choose_project() },
-		{ key = "f", mods = "CMD", action = generalpicker:choose_project() },
-		{ key = "'", mods = "CMD", action = personalpicker:choose_project() },
+		{ key = ";",     mods = "CMD",       action = novapicker:choose_project() },
+		{ key = "f",     mods = "CMD",       action = generalpicker:choose_project() },
+		{ key = "'",     mods = "CMD",       action = personalpicker:choose_project() },
 
 
-		{ key = "Enter", mods = "CMD", action = act.TogglePaneZoomState },
+		{ key = "Enter", mods = "CMD",       action = act.TogglePaneZoomState },
 
-		{ key = "/", mods = "CMD", action = act.QuickSelect},
-		{ key = "/", mods = "ALT|CMD", action = openinhelix.QuickSelect()},
+		{ key = "/",     mods = "CMD",       action = act.QuickSelect },
+		{ key = "/",     mods = "ALT|CMD",   action = openinhelix.QuickSelect() },
 
-		{ key = 'Enter', mods = 'ALT', action = wezterm.action.DisableDefaultAssignment },
+		{ key = 'Enter', mods = 'ALT',       action = wezterm.action.DisableDefaultAssignment },
 
-		{key = "w", mods = "CMD", action = wezterm.action.CloseCurrentPane { confirm = true }},
+		{ key = "w",     mods = "CMD",       action = wezterm.action.CloseCurrentPane { confirm = true } },
 
-		{ key = "d", mods = "CMD", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-		{ key = "d", mods = "SHIFT|CMD", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
-		{ key = "h", mods = "CMD", action = act.ActivatePaneDirection("Left") },
-		{ key = "l", mods = "CMD", action = act.ActivatePaneDirection("Right") },
-		{ key = "j", mods = "CMD", action = act.ActivatePaneDirection("Down") },
-		{ key = "k", mods = "CMD", action = act.ActivatePaneDirection("Up") },
+		{ key = "d",     mods = "CMD",       action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+		{ key = "d",     mods = "SHIFT|CMD", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
+		{ key = "h",     mods = "CMD",       action = act.ActivatePaneDirection("Left") },
+		{ key = "l",     mods = "CMD",       action = act.ActivatePaneDirection("Right") },
+		{ key = "j",     mods = "CMD",       action = act.ActivatePaneDirection("Down") },
+		{ key = "k",     mods = "CMD",       action = act.ActivatePaneDirection("Up") },
 	}
 end
 
