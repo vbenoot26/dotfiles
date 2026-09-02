@@ -1,0 +1,8 @@
+{
+  "name": "pi-extensions",
+  "private": true,
+  "dependencies": {
+    "pi-ask-user": "^0.14.0",
+    "pi-web-fetch": "^1.1.0"
+  }
+}

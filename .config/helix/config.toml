@@ -20,6 +20,7 @@ b = ":sh git blame -L %{cursor_line},%{cursor_line} %{buffer_name}"
 
 [keys.normal.space]
 c = ["collapse_selection", "select_mode", "goto_line_end", "change_selection"]
+x = ":pipe-to /Users/vincentbenoot/dotfiles/scripts/helix-send-to-pi.sh %{buffer_name}"
 
 [keys.insert]
 "C-["= "normal_mode"
