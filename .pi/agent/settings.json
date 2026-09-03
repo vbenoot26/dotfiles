@@ -3,6 +3,7 @@
   "theme": "dark",
   "packages": [
     "npm:pi-ask-user",
-    "npm:pi-web-fetch"
+    "npm:pi-web-fetch",
+    "npm:@dreki-gg/pi-jira"
   ]
 }
