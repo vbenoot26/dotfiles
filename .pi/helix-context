@@ -1,3 +1,2 @@
-// .pi/agent/settings.json
-  "theme": "dark",
-  "packages": ["npm:pi-ask-user", "pi-web-fetch"]
+// .config/helix/config.toml
+x = ":pipe-to /home/vincentb/dotfiles/scripts/helix-send-to-pi.sh %{buffer_name}"

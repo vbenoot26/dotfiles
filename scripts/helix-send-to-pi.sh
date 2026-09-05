@@ -10,6 +10,6 @@ SELECTION=$(cat)
 
 # Write formatted output
 {
-    echo "// $FILENAME"
+    echo "// from file: $FILENAME"
     echo "$SELECTION"
 } > "$OUTPUT_FILE"
