@@ -4,6 +4,12 @@
   "dependencies": {
     "@dreki-gg/pi-jira": "^0.3.1",
     "pi-ask-user": "^0.14.0",
+    "pi-copilot-auto": "^0.1.0",
     "pi-web-fetch": "^1.1.0"
+  },
+  "overrides": {
+    "@mariozechner/pi-coding-agent": "npm:@earendil-works/pi-coding-agent@^0.85.0",
+    "puppeteer": "^25.10.0",
+    "@puppeteer/browsers": "^3.2.2"
   }
 }

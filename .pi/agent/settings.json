@@ -4,6 +4,9 @@
   "packages": [
     "npm:pi-ask-user",
     "npm:pi-web-fetch",
-    "npm:@dreki-gg/pi-jira"
-  ]
+    "npm:@dreki-gg/pi-jira",
+    "npm:pi-copilot-auto"
+  ],
+  "defaultProvider": "github-copilot",
+  "defaultModel": "auto"
 }

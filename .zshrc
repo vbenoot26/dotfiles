@@ -101,3 +101,6 @@ export EDITOR="helix"
 
 # Create the alias.
 alias dmen='dmenu_run -nb "$color0" -nf "$color15" -sb "$color1" -sf "$color15"'
+
+# Puppeteer for pi web fetch
+export PUPPETEER_EXECUTABLE_PATH=/usr/bin/brave
