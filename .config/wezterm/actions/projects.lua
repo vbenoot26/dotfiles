@@ -2,16 +2,16 @@ local wezterm = require("wezterm")
 local M = {}
 M.__index = M
 
-function M.new(dir)
+function M.new(glob)
 	return setmetatable({
-		dir = dir,
+		glob = glob,
 	}, M)
 end
 
 function M:all_dirs()
 	local projects = {}
 
-	for _, dir in ipairs(wezterm.glob(self.dir .. "/*")) do
+	for _, dir in ipairs(wezterm.glob(self.glob)) do
 		table.insert(projects, { label = dir })
 	end
 
