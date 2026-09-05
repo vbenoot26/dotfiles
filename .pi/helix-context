@@ -1,0 +1,3 @@
+// .pi/agent/settings.json
+  "theme": "dark",
+  "packages": ["npm:pi-ask-user", "pi-web-fetch"]
