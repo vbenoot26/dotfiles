@@ -3,7 +3,7 @@
   "private": true,
   "dependencies": {
     "@dreki-gg/pi-jira": "^0.3.1",
-    "pi-ask-user": "^0.14.0",
+    "pi-ask-user": "^0.15.0",
     "pi-copilot-auto": "^0.1.0",
     "pi-web-fetch": "^1.1.0"
   },
