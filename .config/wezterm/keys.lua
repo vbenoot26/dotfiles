@@ -12,26 +12,27 @@ M.apply = function(config)
 	local generalpicker = projects.new(wezterm.home_dir .. "/*")
 
 	config.keys = {
-	 { key = "9", mods = "CTRL", action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
+		{ key = "9",     mods = "CTRL",       action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
 
-	 { key = ";", mods = "CTRL", action = projectpicker:choose_project() },
-	 { key = "f", mods = "CTRL", action = generalpicker:choose_project() },
+		{ key = ";",     mods = "CTRL",       action = projectpicker:choose_project() },
+		{ key = "f",     mods = "CTRL",       action = generalpicker:choose_project() },
 
-	 { key = "Enter", mods = "CTRL", action = act.TogglePaneZoomState },
+		{ key = "Enter", mods = "CTRL",       action = act.TogglePaneZoomState },
 
-	 { key = "/", mods = "CTRL", action = act.QuickSelect},
-	 { key = "/", mods = "ALT|CTRL", action = openinhelix.QuickSelect()},
+		{ key = "/",     mods = "CTRL",       action = act.QuickSelect },
+		{ key = "/",     mods = "ALT|CTRL",   action = openinhelix.QuickSelect() },
 
-	 { key = 'Enter', mods = 'ALT', action = wezterm.action.DisableDefaultAssignment },
+		{ key = 'Enter', mods = 'ALT',        action = wezterm.action.DisableDefaultAssignment },
 
-	 {key = "w", mods = "CTRL", action = wezterm.action.CloseCurrentPane { confirm = true }},
+		{ key = "w",     mods = "CTRL",       action = wezterm.action.CloseCurrentPane { confirm = true } },
 
-	 { key = "d", mods = "CTRL", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-	 { key = "d", mods = "SHIFT|CTRL", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
-	 { key = "h", mods = "CTRL", action = act.ActivatePaneDirection("Left") },
-	 { key = "l", mods = "CTRL", action = act.ActivatePaneDirection("Right") },
-	 { key = "j", mods = "CTRL", action = act.ActivatePaneDirection("Down") },
-	 { key = "k", mods = "CTRL", action = act.ActivatePaneDirection("Up") },
+		{ key = "h",     mods = "CTRL",       action = act.ActivatePaneDirection("Left") },
+		{ key = "l",     mods = "CTRL",       action = act.ActivatePaneDirection("Right") },
+		{ key = "j",     mods = "CTRL",       action = act.ActivatePaneDirection("Down") },
+		{ key = "k",     mods = "CTRL",       action = act.ActivatePaneDirection("Up") },
+
+		{ key = "g",     mods = "CTRL",       action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+		{ key = "g",     mods = "SHIFT|CTRL", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
 	}
 end
 
