@@ -46,7 +46,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec wezterm
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -214,17 +214,15 @@ for_window [window_role="webconsole"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [window_type="menu"] floating enable
 
+assign [class="wezterm"] $ws1
+assign [class="brave"] $ws2
 assign [class="Spotify"] $ws3
-exec --no-startup-id spotify
 
 exec_always --no-startup-id pkaction
 
-exec --no-startup-id i3-msg "workspace $ws1; exec alacritty"
+exec --no-startup-id i3-msg "workspace $ws1; exec wezterm"
 exec --no-startup-id i3-msg "workspace $ws2; exec brave"
 exec --no-startup-id i3-msg "workspace $ws3; exec spotify-launcher"
-
-exec_always xrandr --output DP-2 --right-of DP-1
-exec_always xrandr --output HDMI-0 --same-as DP-1
 
 exec_always --no-startup-id xss-lock --transfer-sleep-lock -- ascii3lock
 
