@@ -51,7 +51,7 @@ M.create = function(cwd, label)
 		cwd = cwd .. "/clanker",
 	})
 
-	opencode_pane:send_text("opencode\n")
+	opencode_pane:send_text("pi --continue\n")
 
 	local _, notes_pane = window:spawn_tab { cwd = openNotes(cwd)}
 	notes_pane:send_text("hx .\n")
